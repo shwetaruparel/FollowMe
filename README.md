@@ -7,7 +7,7 @@ This project will help train the deep neural network to identify a target person
 
 The Original Project Repository is here--> https://github.com/udacity/RoboND-DeepLearning-Project.git
 
-The model is built within Tensorflow and Keras, and was trained using a .
+The model is built within Tensorflow and Keras, and was trained using UDACITY GPU Workspace
 
 ### Network Architecture
   The FCN is built to be able to segment objects within the video stream. This means that each pixel in the image needs to be labeled.     Fully convolutional networks are capable of this via a process called semantic segmentation. The model is built such that the output     image is the same size at the original input image, but each pixel in the output image is coloured one of N segmentation colours.

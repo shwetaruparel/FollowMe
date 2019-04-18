@@ -28,7 +28,7 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
   successfully segmented. Each successive layers builds greater depth of semantics necessary for the segmentation. However, the deeper     the network, the more computationally intensive it becomes to train.
 
 #### 1x1 Convolution Layer
-  The 1x1 convolution layer is a regular convolution, with a kernel and stride of 1. Using a 1x1 convolution layer allows the network to   be able to retain spatial information from the encoder. The 1x1 convolution layers allows the data to be both flattened for         
+  The 1x1 convolution layer is a regular convolution, with a kernel and stride of 1. Using a 1x1 convolution layer allows the network to   be able to retain spatial information from the encoder. The 1x1 convolution layers allows the data to be both flattened for      
   classification while retaining spatial information.
 
 #### Decoder

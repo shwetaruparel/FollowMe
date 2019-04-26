@@ -84,4 +84,5 @@ Performance
 
 
 Future Enhancements
-This model was trained on people, however, it could be used to train on any other objects of interest. For example, it could be trained on images of horses or trucks. The model could conceivably be trained on any set of labelled data large enough.
+This model was trained on people, however, it could be used to
+train on any other objects of interest. For example, it could be trained on images of horses or trucks. The model could conceivably be trained on any set of labelled data large enough.

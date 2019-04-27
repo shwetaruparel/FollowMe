@@ -10,18 +10,21 @@ The Original Project Repository is here--> https://github.com/udacity/RoboND-Dee
 The model is built within Tensorflow and Keras, and was trained using UDACITY GPU Workspace
 
 ### Network Architecture
-  ***Deep neural networks contain multiple non-linear hidden layers and this makes them very expressive models that can learn very           complicated relationships between their inputs and outputs.***
+
+*Deep neural networks contain multiple non-linear hidden layers and this makes them very expressive models that can learn very           complicated relationships between their inputs and outputs.*
   
-  Convolutional networks are powerful visual models that yield hierarchies of features.
+*Convolutional networks are powerful visual models that yield hierarchies of features.
   
   The FCN is built to be able to segment objects within the video stream. This means that each pixel in the image needs to be labeled.     Fully convolutional networks are capable of this via a process called semantic segmentation. The model is built such that the output     image is the same size at the original input image.Semantic segmentation allows FCNs to preserve spatial information throughout the     network.
 
-#### Fully Convolutional Networks
+***Fully Convolutional Networks***
+
   CNNs and FCNs both have an encoder section compromised of regular convolutions. Fully Convolutional Networks have a 1x1 convolution     layer and a decoder section made of reversed convolution layers. Instead of a final fully connected layer, like a Convolutional Neural   Network, every layer in an FCN is a fully convolutional layer.
 
   A fully convolutional net tries to learn representations and make decisions based on local spatial input. Appending a fully connected   layer enables the network to learn something using global information where the spatial arrangement of the input falls away and need     not apply.
 
-#### Encoder
+***Encoder***
+
   The encoder section is comprised of one or more encoder blocks with each including a separable convolution layer.
 
   Separable convolution layers are a convolution technique for increasing model performance by reducing the number of parameters in each   convolution. A spatial convolution is performed, followed with a depthwise convolution. Separable convolutions stride the input with     only the kernel, then stride each of those feature maps with a 1x1 convolution for each output layer, and then add the two together.     This technique allows for the efficient use of parameters.
@@ -29,11 +32,12 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
   The encoder layers the model to gain a better understanding of the characeristics in the image, building a depth of understanding with   respect to specific features and thus the 'semantics' of the segmentation. The first layer might discern colours and brightness, the     next might discern aspects of the shape of the object, so for a human body, arms and legs and heads might begin to become          
   successfully segmented. Each successive layers builds greater depth of semantics necessary for the segmentation. However, the deeper     the network, the more computationally intensive it becomes to train.
 
-#### 1x1 Convolution Layer
+***1x1 Convolution Layer***
+
   The 1x1 convolution layer is a regular convolution, with a kernel and stride of 1. Using a 1x1 convolution layer allows the network to   be able to retain spatial information from the encoder. The 1x1 convolution layers allows the data to be both flattened for      
   classification while retaining spatial information.
 
-#### Decoder
+***Decoder***
 
   The decoder section of the model can either be composed of transposed convolution layers or bilinear upsampling layers.
 
@@ -45,7 +49,8 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
 
   Each decoder layer is able to reconstruct a little bit more spatial resolution from the layer before it. The final decoder layer will   output a layer the same size as the original model input image, which will be used for guiding the quad drone.
 
-#### Skip Connections
+***Skip Connections***
+
   Skip connections allow the network to retain information from prior layers that were lost in subsequent convolution layers. Skip         layers use the output of one layer as the input to another layer. By using information from multiple image sizes, the model retains     more information through the layers and is therefore able to make more precise segmentation decisions.
 
   The FCN model used for the project contains two encoder block layers, a 1x1 convolution layer, and two decoder block layers.
@@ -59,6 +64,8 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
   The output convolution layer applies a softmax activation function to the output of the second decoder block.
 
 #### Hyperparameters
+
+Hyperparameters were found mostly via manual tuning and inspection. In future I would like to create a function that could test for different learning rates g rate to decrease over time according to the differential of the validation loss over time and to undertake a performance-based search.
 
 The optimal hyperparameters:
 
@@ -74,7 +81,6 @@ The optimal hyperparameters:
 
   workers = 2
 
-Hyperparameters were found mostly via manual tuning and inspection. In future I would code the learning rate to decrease over time according to the differential of the validation loss over time and to undertake a performance-based search.
 
 Training
 

@@ -107,12 +107,9 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
     
     # Remember that with each encoder layer, the depth of your model (the number of filters) increases.
 
-    # TODO Add 1x1 Convolution layer using conv2d_batchnorm().
     conv_1x1 = conv2d_batchnorm(input_layer=enc_4,    filters=256, kernel_size=1, strides=1)
     # img_w/16 x img_h/16 x 256 => img_w/16 x img_h/16 x 128
-    conv_1x1 = conv2d_batchnorm(input_layer=conv_1x1, filters=128, kernel_size=1, strides=1)    
-      
-    # TODO: Add the same number of Decoder Blocks as the number of Encoder Blocks
+    conv_1x1 = conv2d_batchnorm(input_layer=conv_1x1, filters=128, kernel_size=1, strides=1)        
     dec_1 = decoder_block(small_ip_layer=conv_1x1, large_ip_layer=enc_3_1,  filters=128)
     # img_w/8 x img_h/8 x 128 => img_w/4 x img_h/4 x 64
     dec_2 = decoder_block(small_ip_layer=dec_1,    large_ip_layer=enc_2,  filters=64)

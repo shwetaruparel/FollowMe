@@ -11,11 +11,22 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
 
 ### Network Architecture
 
-*Deep neural networks contain multiple non-linear hidden layers and this makes them very expressive models that can learn very           complicated relationships between their inputs and outputs.*
+#### Deep neural networks contain multiple non-linear hidden layers and this makes them very expressive models that can learn very           complicated relationships between their inputs and outputs.
   
-*Convolutional networks are powerful visual models that yield hierarchies of features.
+*Convolutional networks are powerful visual models that yield hierarchies of features and used to classify images.The first step for a CNN is to break up the image into smaller pieces. This is done by selecting a width and height that defines a filter. The filter looks at small pieces, or patches, of the image. Then simply slide this filter horizontally or vertically to focus on a different piece of the image.The amount by which the filter slides is referred to as the 'stride'. Increasing the stride reduces the size of the model by reducing the number of total patches each layer observes. However, this usually comes with a reduction in accuracy.*
+
+  *This helps CNN to learn classifying local patterns, like shapes and objects in an image.*
+
+  *It's common to have more than one filter.Different filters pick up different qualities of a patch. The amount of filters in a            convolutional layer is called the filter depth.If we have a depth of k, we connect each patch of pixels to k neurons in the next          layer. This gives us the height of k in the next layer.Multiple neurons can be useful because a patch can have multiple interesting      characteristics that we want to capture.*
   
-  The FCN is built to be able to segment objects within the video stream. This means that each pixel in the image needs to be labeled.     Fully convolutional networks are capable of this via a process called semantic segmentation. The model is built such that the output     image is the same size at the original input image.Semantic segmentation allows FCNs to preserve spatial information throughout the     network.
+  
+   *CNN isn't "programmed" to look for certain characteristics. Rather, it learns on its own which characteristics to notice.*
+   
+   *The following images shows the * 
+   
+  ### A Fully Convolutional Network is a powerful type of Neural Network, capable of carrying out complex computer vision tasks such as       identifying objects in an image. However, unlike a simple classifier, it is capable of showing where in the image the object of         interest is located.
+
+   The FCN is built to be able to segment objects within the video stream. This means that each pixel in the image needs to be labeled.     Fully convolutional networks are capable of this via a process called semantic segmentation. The model is built such that the output     image is the same size at the original input image.Semantic segmentation allows FCNs to preserve spatial information throughout the     network.
 
 ***Fully Convolutional Networks***
 

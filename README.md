@@ -121,21 +121,21 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
 
 #### Hyperparameters
 
-Hyperparameters were found mostly via manual tuning and inspection. In future I would like to create a function that could test for different learning rates g rate to decrease over time according to the differential of the validation loss over time and to undertake a performance-based search.
+Hyperparameters were found mostly via manual tuning and inspection. In future I would like to create a function that could test for different learning rates  rate to decrease over time according to the differential of the validation loss over time and to undertake a performance-based search.
 
 The optimal hyperparameters:
 
-  learning rate = 0.0015
+learning_rate = 0.001
 
-  batch size = 100
+batch_size = 100
 
-  number of epochs = 40
-  
-  steps per epoch = 200
+num_epochs = 200
 
-  validation steps = 50
+steps_per_epoch = 50
 
-  workers = 2
+validation_steps = 12
+
+workers = 4
 
 
 Training

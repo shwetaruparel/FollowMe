@@ -23,12 +23,12 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
   
 *4)CNN isn't "programmed" to look for certain characteristics. Rather, it learns on its own which characteristics to notice.*
  
-Fully connected layer — Fully connected layers connect every neuron in one layer to every neuron in another layer. It is in principle the same as the traditional multi-layer perceptron neural network.
-Finally, after several convolutional and max pooling layers, the high-level reasoning in the neural network is done via fully connected layers. Neurons in a fully connected layer have connections to all activations in the previous layer, as seen in regular neural networks. Their activations can hence be computed with a matrix multiplication followed by a bias offset.
+*5)Fully connected layer — Fully connected layers connect every neuron in one layer to every neuron in another layer. It is in principle the same as the traditional multi-layer perceptron neural network.*
+*Finally, after several convolutional and max pooling layers, the high-level reasoning in the neural network is done via fully connected layers. Neurons in a fully connected layer have connections to all activations in the previous layer, as seen in regular neural networks. Their activations can hence be computed with a matrix multiplication followed by a bias offset.*
 
-Advantages: A fully connected layer learns features from all the combinations of the features of the previous layer, where a convolutional layer relies on local spatial coherence with a small receptive field.
+*Advantages: A fully connected layer learns features from all the combinations of the features of the previous layer, where a convolutional layer relies on local spatial coherence with a small receptive field.*
 
-Disadvantages: Fully connected layers are incredibly computationally expensive. That’s why we use them only to combine the upper layer features.Also fully connected layer don't preserve the spatial information.
+*Disadvantages: Fully connected layers are incredibly computationally expensive. That’s why we use them only to combine the upper layer features.Also fully connected layer don't preserve the spatial information.*
 
 ***The following images shows ConvNet Architecture*** 
    
@@ -91,15 +91,36 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
 
   Skip connections allow the network to retain information from prior layers that were lost in subsequent convolution layers. Skip         layers use the output of one layer as the input to another layer. By using information from multiple image sizes, the model retains     more information through the layers and is therefore able to make more precise segmentation decisions.
 
-  The FCN model used for the project contains two encoder block layers, a 1x1 convolution layer, and two decoder block layers.
+  ***The FCN model used for the project contains a regular four encoder block layers,  1x1 convolution layers, and four decoder block layers.
 
-  The first convolution uses a filter size of 32 and a stride of 2, while the second convolution uses a filter size of 64 and a stride     of 2. Both convolutions used same padding. The padding and the stride of 2 cause each layer to halve the image size, while increasing   the depth to match the filter size used, finally encoding the input within the 1x1 convolution layer uses a filter size of 128, with     the standard kernel and stride size of 1.
-  
-  The first decoder block layer uses the output from the 1x1 convolution as the small input layer, and the first convolution layer as     the large input layer, thus mimicking a skip connection. A filter size of 64 is used for this layer.
+   
+    conv_in = conv2d_batchnorm(input_layer=inputs, filters=16, kernel_size=1, strides=1)
+    enc_1 = encoder_block(input_layer=conv_in,  filters=32,  strides=2)
+    # img_w/2 x img_h/2 x 32 => img_w/4 x img_h/4 x 64
+    enc_2 = encoder_block(input_layer=enc_1,   filters=64,  strides=2)
+    # img_w/4 x img_h/4 x 64 => img_w/8 x img_h/8 x 128
+    enc_3_1 = encoder_block(input_layer=enc_2, filters=128, strides=2)
+    # img_w/8 x img_h/8 x 128 => img_w/8 x img_h/8 x 128
+    enc_3_2 = conv2d_batchnorm(input_layer=enc_3_1, filters=128, kernel_size=1, strides=1)
+    # img_w/8 x img_h/8 x 128 => img_w/16 x img_h/16 x 256
+    enc_4 = encoder_block(input_layer=enc_3_2, filters=256, strides=2)
+    
+    # Remember that with each encoder layer, the depth of your model (the number of filters) increases.
 
-  The second decoder block layer uses the output from the first decoder block as the small input layer, and the original image as the     large input layer, again mimicking the skip connection to retain information better through the network. This layer uses a filter size   of 32.
-
-  The output convolution layer applies a softmax activation function to the output of the second decoder block.
+    # TODO Add 1x1 Convolution layer using conv2d_batchnorm().
+    conv_1x1 = conv2d_batchnorm(input_layer=enc_4,    filters=256, kernel_size=1, strides=1)
+    # img_w/16 x img_h/16 x 256 => img_w/16 x img_h/16 x 128
+    conv_1x1 = conv2d_batchnorm(input_layer=conv_1x1, filters=128, kernel_size=1, strides=1)    
+      
+    # TODO: Add the same number of Decoder Blocks as the number of Encoder Blocks
+    dec_1 = decoder_block(small_ip_layer=conv_1x1, large_ip_layer=enc_3_1,  filters=128)
+    # img_w/8 x img_h/8 x 128 => img_w/4 x img_h/4 x 64
+    dec_2 = decoder_block(small_ip_layer=dec_1,    large_ip_layer=enc_2,  filters=64)
+    # img_w/4 x img_h/4 x 64 => img_w/2 x img_h/2 x 32
+    dec_3 = decoder_block(small_ip_layer=dec_2,    large_ip_layer=enc_1,  filters=32)
+    # img_w/2 x img_h/2 x 32 => img_w x img_h x num_classes
+    x = decoder_block(small_ip_layer=dec_3,        large_ip_layer=inputs, filters=num_classes)   
+    return layers.Conv2D(num_classes, 3, activation='softmax', padding='same')(x)
 
 #### Hyperparameters
 

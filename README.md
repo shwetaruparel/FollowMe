@@ -3,7 +3,7 @@ Drone tracking and following a single hero target
 
 ## Deep Learning Project ##
 
-This project will help train the deep neural network to identify a target person from images produced by a quadcoptor simulator. 
+This project will help build your own segmentation network, train it, valide it and deploy it that will help to identify a target person from images produced by a quadcoptor simulator. 
 
 The Original Project Repository is here--> https://github.com/udacity/RoboND-DeepLearning-Project.git
 
@@ -15,13 +15,13 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
   
 *Convolutional networks are powerful visual models that yield hierarchies of features and used to classify images.The first step for a CNN is to break up the image into smaller pieces. This is done by selecting a width and height that defines a filter. The filter looks at small pieces, or patches, of the image. Then simply slide this filter horizontally or vertically to focus on a different piece of the image.The amount by which the filter slides is referred to as the 'stride'. Increasing the stride reduces the size of the model by reducing the number of total patches each layer observes. However, this usually comes with a reduction in accuracy.*
 
-  *1)This helps CNN to learn classifying local patterns, like shapes and objects in an image.*
+*1)This helps CNN to learn classifying local patterns, like shapes and objects in an image.*
 
-  *2)It's common to have more than one filter.Different filters pick up different qualities of a patch. The amount of filters in a            convolutional layer is called the filter depth.If we have a depth of k, we connect each patch of pixels to k neurons in the next        layer. This gives us the height of k in the next layer.Multiple neurons can be useful because a patch can have multiple interesting      characteristics that we want to capture.*
+*2)It's common to have more than one filter.Different filters pick up different qualities of a patch. The amount of filters in a            convolutional layer is called the filter depth.If we have a depth of k, we connect each patch of pixels to k neurons in the next        layer. This gives us the height of k in the next layer.Multiple neurons can be useful because a patch can have multiple interesting      characteristics that we want to capture.*
   
-   *3)Multiple convultions layers are then finally connected to Fully Connected Layers followed by softmax activation function.
+*3)Multiple convultions layers are then finally connected to Fully Connected Layers followed by softmax activation function.
   
-   *4)CNN isn't "programmed" to look for certain characteristics. Rather, it learns on its own which characteristics to notice.*
+*4)CNN isn't "programmed" to look for certain characteristics. Rather, it learns on its own which characteristics to notice.*
    
    *The following images shows the * 
    
@@ -49,21 +49,24 @@ FCNs take advantage of three special techniquess
 
 3) Skip Connections to allow the network to use information from multiple resolution scales to make more precise segmentation decision.
 
-***An FCN is usually comprised of two parts Encode and Decoder.***
+***An FCN is usually comprised of two parts Encoder and Decoder.***
 
 ***Encoder***
 
-  The encoder section is comprised of series of convolutional layers to extract features.Here we shall use Separable Convolution Layer
+  The encoder section is comprised of series of convolutional layers to extract features.Here we use Separable Convolution Layer
 
-  Separable convolution layers are a convolution technique for increasing model performance by reducing the number of parameters in each   convolution. A spatial convolution is performed, followed with a depthwise convolution. Separable convolutions stride the input with     only the kernel, then stride each of those feature maps with a 1x1 convolution for each output layer, and then add the two together.     This technique allows for the efficient use of parameters.
+*Separable convolution layers are a convolution technique for increasing model performance by reducing the number of parameters in each convolution. A spatial convolution is performed, followed with a depthwise convolution. Separable convolutions stride the input with  only the kernel, then stride each of those feature maps with a 1x1 convolution for each output layer, and then add the two together. This technique allows for the efficient use of parameters. it is highly computationally efficient whilst also being extremely  accurate.*
 
 The encoder layers allows model to gain a better understanding of the characeristics in the image, building a depth of understanding    with respect to specific features and thus the 'semantics' of the segmentation. The first layer might discern colours and brightness, the next might discern aspects of the shape of the object, so for a human body, arms and legs and heads might begin to become          
 successfully segmented. Each successive layers builds greater depth of semantics necessary for the segmentation. However, the deeper     the network, the more computationally intensive it becomes to train.
 
+*The batch normalization layer has a number of advantages. It makes the network train more quickly and effectively and makes it easier to find good hyperparameters. It normalises the inputs of each layer so that they have a mean output activation of zero and standard deviation of one*
+
 ***1x1 Convolution Layer***
 
-  The 1x1 convolution layer is a regular convolution, with a kernel and stride of 1. Using a 1x1 convolution layer allows the network to   be able to retain spatial information from the encoder. The 1x1 convolution layers allows the data to be both flattened for      
-  classification while retaining spatial information.
+In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However, when we wish to feed the output of a convolutional layer into a fully connected layer, we flatten it into a 2D tensor. This results in the loss of spatial information, because no information about the location of the pixels is preserved.We can avoid that by using 1x1 convolutions.
+
+*The 1x1 convolution layer is a regular convolution, with a kernel and stride of 1. Using a 1x1 convolution layer allows the network to  be able to retain spatial information from the encoder. The 1x1 convolution layers allows the data to be both flattened for        classification while retaining spatial information.*
 
 ***Decoder***
 
@@ -113,12 +116,13 @@ The optimal hyperparameters:
 Training
 
 
-Performance
-This model was trained on people, however, it could be used to train on any other objects of interest. For example, it could be trained on images of horses or trucks. The model could conceivably be trained on any set of labelled data large enough.To create a model that works with more categories it is necessary to collect and label images with enough examples for each class with different poses, distances and lighting conditions. With such dataset on hand it is then possible to train a new model using the same technique described here. 
+### Would this model and data work well for following another object (dog, cat, car, etc.) instead of a human and if not, what changes would be required.###
+
+This model was trained on people, however, it could be used to train on any other objects of interest. For example, it could be trained on images of horses or trucks,car,dog,cat. The model could conceivably be trained on any set of labelled data large enough to create a model that works with more categories it is necessary to collect and label images with enough examples for each class with different poses, distances and lighting conditions. With such dataset on hand it is then possible to train a new model using the same technique described here. 
 
 ***Future Enhancements***
 
 
 ***CONCLUSION***
 
-This was an exciting project and explains in depth about how to train a deep learning neural network.Also it is important to collect good data. Good data is just as important as a good network architecture, so collecting the best data you can is a key to success!
+This was an exciting project and explains in depth about how to train a deep learning neural network.Also how important is to collect good data. Good data is just as important as a good network architecture, so collecting the best data you can is a key to success!

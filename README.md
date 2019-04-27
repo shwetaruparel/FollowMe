@@ -3,7 +3,7 @@ Drone tracking and following a single hero target
 
 ## Deep Learning Project ##
 
-This project will help build your own segmentation network, train it, valide it and deploy it that will help to identify a target person from images produced by a quadcoptor simulator. 
+This project will help build your own segmentation network, train it, valide it and deploy it . The trained deep neural network will be used to identify a target person from images produced by a quadcoptor simulator. 
 
 The Original Project Repository is here--> https://github.com/udacity/RoboND-DeepLearning-Project.git
 
@@ -23,11 +23,13 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
   
 *4)CNN isn't "programmed" to look for certain characteristics. Rather, it learns on its own which characteristics to notice.*
    
-   *The following images shows the * 
+***The following images shows ConvNet Architecture*** 
    
-   ***This is a great architecture of classifying task.
-   what if the image classification is needed in addition to location of the object in the image?
-   Fully Connected Layers dont preserve the spatial information***
+***This is a great architecture of classifying task.***
+   
+***what if the image classification is needed in addition to location of the object in the image?***
+   
+*Fully Connected Layers dont preserve the spatial information.
    
 ### A Fully Convolutional Network
 FCN is a powerful type of Neural Network, capable of carrying out complex computer vision tasks such as identifying objects in  an image. However, unlike a simple classifier, it is capable of showing where in the image the object of interest is located.This is the architecture we have used in the task follow me , where a human target is first identified and then followed as per the location of human target in the scene.

@@ -29,10 +29,10 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
    what if the image classification is needed in addition to location of the object in the image?
    Fully Connected Layers dont preserve the spatial information***
    
-   ### A Fully Convolutional Network
-   FCN is a powerful type of Neural Network, capable of carrying out complex computer vision tasks such as       identifying objects in  an image. However, unlike a simple classifier, it is capable of showing where in the image the object of         interest is located.This is the architecture we have used in the task follow me , where a human target is first identified and           then followed as per the location of human target in the scene.
+### A Fully Convolutional Network
+FCN is a powerful type of Neural Network, capable of carrying out complex computer vision tasks such as identifying objects in  an image. However, unlike a simple classifier, it is capable of showing where in the image the object of interest is located.This is the architecture we have used in the task follow me , where a human target is first identified and then followed as per the location of human target in the scene.
 
-        *1)The FCN is built to be able to segment objects within the video stream. This means that each pixel in the image needs to be              labeled. Fully convolutional networks are capable of this via a process called semantic segmentation. The model is built such            that the output image is the same size at the original input image.Semantic segmentation allows FCNs to preserve spatial                information throughout the network.*
+ The FCN is built to be able to segment objects within the video stream. This means that each pixel in the image needs to be              labeled. Fully convolutional networks are capable of this via a process called semantic segmentation. The model is built such            that the output image is the same size at the original input image.Semantic segmentation allows FCNs to preserve spatial                information throughout the network.
        
 ***Semantic Segmentation***
     
@@ -41,18 +41,24 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
 
 ***Fully Convolutional Networks***
 
-  CNNs and FCNs both have an encoder section compromised of regular convolutions. Fully Convolutional Networks have a 1x1 convolution     layer and a decoder section made of reversed convolution layers. Instead of a final fully connected layer, like a Convolutional Neural   Network, every layer in an FCN is a fully convolutional layer.
+FCNs take advantage of three special techniquess
 
-  A fully convolutional net tries to learn representations and make decisions based on local spatial input. Appending a fully connected   layer enables the network to learn something using global information where the spatial arrangement of the input falls away and need     not apply.
+1) Replace Fully Connected Layer by 1 by 1 Convolutional Layer.
+
+2) Upsampling throught the use of Transpose convolutional Layers.
+
+3) Skip Connections to allow the network to use information from multiple resolution scales to make more precise segmentation decision.
+
+***An FCN is usually comprised of two parts Encode and Decoder.***
 
 ***Encoder***
 
-  The encoder section is comprised of one or more encoder blocks with each including a separable convolution layer.
+  The encoder section is comprised of series of convolutional layers to extract features.Here we shall use Separable Convolution Layer
 
   Separable convolution layers are a convolution technique for increasing model performance by reducing the number of parameters in each   convolution. A spatial convolution is performed, followed with a depthwise convolution. Separable convolutions stride the input with     only the kernel, then stride each of those feature maps with a 1x1 convolution for each output layer, and then add the two together.     This technique allows for the efficient use of parameters.
 
-  The encoder layers the model to gain a better understanding of the characeristics in the image, building a depth of understanding with   respect to specific features and thus the 'semantics' of the segmentation. The first layer might discern colours and brightness, the     next might discern aspects of the shape of the object, so for a human body, arms and legs and heads might begin to become          
-  successfully segmented. Each successive layers builds greater depth of semantics necessary for the segmentation. However, the deeper     the network, the more computationally intensive it becomes to train.
+The encoder layers allows model to gain a better understanding of the characeristics in the image, building a depth of understanding    with respect to specific features and thus the 'semantics' of the segmentation. The first layer might discern colours and brightness, the next might discern aspects of the shape of the object, so for a human body, arms and legs and heads might begin to become          
+successfully segmented. Each successive layers builds greater depth of semantics necessary for the segmentation. However, the deeper     the network, the more computationally intensive it becomes to train.
 
 ***1x1 Convolution Layer***
 

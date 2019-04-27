@@ -13,7 +13,7 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
 
 #### Deep neural networks contain multiple non-linear hidden layers and this makes them very expressive models that can learn very           complicated relationships between their inputs and outputs.
   
-*Convolutional networks are powerful visual models that yield hierarchies of features and used to classify images.The first step for a CNN is to break up the image into smaller pieces. This is done by selecting a width and height that defines a filter. The filter looks at small pieces, or patches, of the image. Then simply slide this filter horizontally or vertically to focus on a different piece of the image.The amount by which the filter slides is referred to as the 'stride'. Increasing the stride reduces the size of the model by reducing the number of total patches each layer observes. However, this usually comes with a reduction in accuracy.*
+*Convolutional networks are powerful visual models that yield hierarchies of features and useful for image classification, object detection, and recognition tasks.CNNs are implemented as a series of interconnected layers.The layers are made up of repeated blocks of convolutional, ReLU (rectified linear units), and pooling layers. The convolutional layers convolve their input with a set of filters. The filters were automatically learned during network training. The ReLU layer adds nonlinearity to the network, which enables the network to approximate the nonlinear mapping between image pixels and the semantic content of an image. The pooling layers downsample their inputs and help consolidate local image features.
 
 *1)This helps CNN to learn classifying local patterns, like shapes and objects in an image.*
 
@@ -22,32 +22,37 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
 *3)Multiple convultions layers are then finally connected to Fully Connected Layers followed by softmax activation function.
   
 *4)CNN isn't "programmed" to look for certain characteristics. Rather, it learns on its own which characteristics to notice.*
-   
+ 
+Fully connected layer — Fully connected layers connect every neuron in one layer to every neuron in another layer. It is in principle the same as the traditional multi-layer perceptron neural network.
+Finally, after several convolutional and max pooling layers, the high-level reasoning in the neural network is done via fully connected layers. Neurons in a fully connected layer have connections to all activations in the previous layer, as seen in regular neural networks. Their activations can hence be computed with a matrix multiplication followed by a bias offset.
+
+Advantages: A fully connected layer learns features from all the combinations of the features of the previous layer, where a convolutional layer relies on local spatial coherence with a small receptive field.
+
+Disadvantages: Fully connected layers are incredibly computationally expensive. That’s why we use them only to combine the upper layer features.Also fully connected layer don't preserve the spatial information.
+
 ***The following images shows ConvNet Architecture*** 
    
 ***This is a great architecture of classifying task.***
    
-***what if the image classification is needed in addition to location of the object in the image?***
-   
-*Fully Connected Layers dont preserve the spatial information.
-   
-### A Fully Convolutional Network
+***But,the question is - what if the image classification is needed in addition to location of the object in the image?***
+
+### A Fully Convolutional Network is able to both identify the object and identify where it is
+
 FCN is a powerful type of Neural Network, capable of carrying out complex computer vision tasks such as identifying objects in  an image. However, unlike a simple classifier, it is capable of showing where in the image the object of interest is located.This is the architecture we have used in the task follow me , where a human target is first identified and then followed as per the location of human target in the scene.
 
  The FCN is built to be able to segment objects within the video stream. This means that each pixel in the image needs to be              labeled. Fully convolutional networks are capable of this via a process called semantic segmentation. The model is built such            that the output image is the same size at the original input image.Semantic segmentation allows FCNs to preserve spatial                information throughout the network.
        
 ***Semantic Segmentation***
     
-     Semantic Segmentation is the cutting edge of perception in Robotics for full scene understanding.Semantic Segmentation is the task      of assigning mesaning to parts of an object. This can be done at pixel level, where each pixel can be assigned a target class.
-   
+Semantic Segmentation is the cutting edge of perception in Robotics for full scene understanding.Semantic Segmentation is the task      of assigning mesaning to parts of an object. This can be done at pixel level, where each pixel can be assigned a target class.  
 
 ***Fully Convolutional Networks***
 
 FCNs take advantage of three special techniquess
 
-1) Replace Fully Connected Layer by 1 by 1 Convolutional Layer.
+1) Replace Fully Connected Layer by 1 X 1 Convolutional Layer.
 
-2) Upsampling throught the use of Transpose convolutional Layers.
+2) Upsampling through the use of bilinear/Transpose convolutional Layers.
 
 3) Skip Connections to allow the network to use information from multiple resolution scales to make more precise segmentation decision.
 
@@ -55,7 +60,7 @@ FCNs take advantage of three special techniquess
 
 ***Encoder***
 
-  The encoder section is comprised of series of convolutional layers to extract features.Here we use Separable Convolution Layer
+ The encoder section is comprised of series of convolutional layers to extract features.Here we use Separable Convolution Layer
 
 *Separable convolution layers are a convolution technique for increasing model performance by reducing the number of parameters in each convolution. A spatial convolution is performed, followed with a depthwise convolution. Separable convolutions stride the input with  only the kernel, then stride each of those feature maps with a 1x1 convolution for each output layer, and then add the two together. This technique allows for the efficient use of parameters. it is highly computationally efficient whilst also being extremely  accurate.*
 

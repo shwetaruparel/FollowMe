@@ -38,7 +38,13 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
 *Disadvantages: Fully connected layers are incredibly computationally expensive. That’s why we use them only to combine the upper layer features.Also fully connected layer don't preserve the spatial information.*
 
 ***The following images shows ConvNet Architecture*** 
-![alt text][image_0]
+![stride and filter][image_0]
+
+![Fully Connected Layer][image_2]
+
+![ConvNet Architecture][image_4]
+
+
    
 ***This is a great architecture of classifying task.***
    

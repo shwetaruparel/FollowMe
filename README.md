@@ -76,12 +76,26 @@ FCNs take advantage of three special techniquess
 
  The encoder section is comprised of series of convolutional layers to extract features.Here we use Separable Convolution Layer
 
-*Separable convolution layers are a convolution technique for increasing model performance by reducing the number of parameters in each convolution. A spatial convolution is performed, followed with a depthwise convolution. Separable convolutions stride the input with  only the kernel, then stride each of those feature maps with a 1x1 convolution for each output layer, and then add the two together. This technique allows for the efficient use of parameters. it is highly computationally efficient whilst also being extremely  accurate.*
+*Separable convolution layers are a convolution technique for increasing model performance by reducing the number of parameters in each convolution. Separable convolutions, also known as depthwise separable convolutions, comprise of a convolution performed over each channel of an input layer and followed by a 1x1 convolution that takes the output channels from the previous step and then combines them into an output layer. This technique allows for the efficient use of parameters. it is highly computationally efficient whilst also being extremely  accurate.
 
-The encoder layers allows model to gain a better understanding of the characeristics in the image, building a depth of understanding    with respect to specific features and thus the 'semantics' of the segmentation. The first layer might discern colours and brightness, the next might discern aspects of the shape of the object, so for a human body, arms and legs and heads might begin to become          
-successfully segmented. Each successive layers builds greater depth of semantics necessary for the segmentation. However, the deeper     the network, the more computationally intensive it becomes to train.
+*Suppose we have an input shape of 32x32x3. With the desired number of 9 output channels and filters (kernels) of shape 3x3x3. In the regular convolutions, the 3 input channels get traversed by the 9 kernels. This would result in a total of 9*3*3*3 features (ignoring biases).* ***That's a total of 243 parameters.***
+
+*In case of the* ***separable convolutions***, *the 3 input channels get traversed with 1 kernel each. That gives us 27 parameters (3*3*3) and 3 feature maps. In the next step, these 3 feature maps get traversed by 9 1x1 convolutions each. That results in a total of 27 (9*3) parameters. That's a total of 54 (27 + 27) parameters! Way less than the 243 parameters we got above. And as the size of the layers or channels increases, the difference will be more noticeable.*
+
+*The reduction in the parameters make separable convolutions quite efficient with improved runtime performance and are also, as a result, useful for mobile applications. They also have the added benefit of reducing overfitting to an extent, because of the fewer parameters.*
+
+***The encoder layers allows model to gain a better understanding of the characeristics in the image, building a depth of understanding    with respect to specific features and thus the 'semantics' of the segmentation. The first layer might discern colours and brightness, the next might discern aspects of the shape of the object, so for a human body, arms and legs and heads might begin to become          successfully segmented. Each successive layers builds greater depth of semantics necessary for the segmentation. However, the deeper     the network, the more computationally intensive it becomes to train.***
 
 *The batch normalization layer has a number of advantages. It makes the network train more quickly and effectively and makes it easier to find good hyperparameters. It normalises the inputs of each layer so that they have a mean output activation of zero and standard deviation of one*
+***Few advantages of using Batch Normalisation are:***
+
+**Networks train faster –** Each training iteration will actually be slower because of the extra calculations during the forward pass. However, it should converge much more quickly, so training should be faster overall.
+
+**Allows higher learning rates –** Gradient descent usually requires small learning rates for the network to converge. And as networks get deeper, their gradients get smaller during back propagation so they require even more iterations. Using batch normalization allows us to use much higher learning rates, which further increases the speed at which networks train.
+
+**Simplifies the creation of deeper networks –** Because of the above reasons, it is easier to build and faster to train deeper neural networks when using batch normalization.
+
+**Provides a bit of regularization –** Batch normalization adds a little noise to your network. In some cases, such as in Inception modules, batch normalization has been shown to work as well as dropout.
 
 ***1x1 Convolution Layer***
 
@@ -100,13 +114,14 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
   The decoder block mimics the use of skip connections by having the larger decoder block input layer act as the skip connection. It       calculates the separable convolution layer of the concatenated bilinear upsample of the smaller input layer with the larger input       layer.
 
   Each decoder layer is able to reconstruct a little bit more spatial resolution from the layer before it. The final decoder layer will   output a layer the same size as the original model input image, which will be used for guiding the quad drone.
+  
+  **The bilinear upsampling method does not contribute as a learnable layer like the transposed convolutions in the architecture and is prone to lose some finer details, but it helps speed up performance.**
 
 ***Skip Connections***
 
   Skip connections allow the network to retain information from prior layers that were lost in subsequent convolution layers. Skip         layers use the output of one layer as the input to another layer. By using information from multiple image sizes, the model retains     more information through the layers and is therefore able to make more precise segmentation decisions.
 
-  ***The FCN model used for the project contains a regular four encoder block layers,  1x1 convolution layers, and four decoder block layers.
-
+  ***The FCN model used for the project contains a four encoder block layers,  1x1 convolution layers, and four decoder block layers.
    
     conv_in = conv2d_batchnorm(input_layer=inputs, filters=16, kernel_size=1, strides=1)
     enc_1 = encoder_block(input_layer=conv_in,  filters=32,  strides=2)
@@ -135,7 +150,7 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
 
 #### Hyperparameters
 
-Hyperparameters were found mostly via manual tuning and inspection. In future I would like to create a function that could test for different learning rates  rate to decrease over time according to the differential of the validation loss over time and to undertake a performance-based search.
+Hyperparameters were found mostly via manual tuning and inspection. Starting with a learning rate of .0015 to reaching 0.001 that gives the ***final grade score of 43% and final IOU of 57%***. The number of images were around 
 
 The optimal hyperparameters:
 

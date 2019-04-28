@@ -150,7 +150,9 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
 
 #### Hyperparameters
 
-Hyperparameters were found mostly via manual tuning and inspection. Starting with a learning rate of .0015 to reaching 0.001 that gives the ***final grade score of 43% and final IOU of 57%***. The number of images were around 
+Hyperparameters were found mostly via manual tuning and inspection. Starting with a learning rate of .0015 to reaching 0.001 that gives the ***final grade score of 43% and final IOU of 57%***. There are 4131 images in the training dataset.Taking into consideration that no memory issues come arounf I chose batch_size to be 100 and accordingly selected steps_per_epoch to be 50 approximated by dividing number of images by batch_size. I wanted to try with 4 workers to maximize the speed and it worked. I started with validation steps with a value of 10 and then increased to 12 to obtain less loss and better score.
+
+***Learning Rate was the most challenging parameter, I tried higher rates like 0.01 to 0.009 to 0.001 and best parameter to be able to give better grade score was 0.001.***
 
 The optimal hyperparameters:
 
@@ -165,9 +167,6 @@ steps_per_epoch = 50
 validation_steps = 12
 
 workers = 4
-
-
-Training
 
 
 ### Would this model and data work well for following another object (dog, cat, car, etc.) instead of a human and if not, what changes would be required.

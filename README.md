@@ -26,6 +26,8 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
 
 *2)It's common to have more than one filter.Different filters pick up different qualities of a patch. The amount of filters in a            convolutional layer is called the filter depth.If we have a depth of k, we connect each patch of pixels to k neurons in the next        layer. This gives us the height of k in the next layer.Multiple neurons can be useful because a patch can have multiple interesting      characteristics that we want to capture.*
   
+![stride and filter][image_0]
+
 *3)Multiple convultions layers are then finally connected to Fully Connected Layers followed by softmax activation function.
   
 *4)CNN isn't "programmed" to look for certain characteristics. Rather, it learns on its own which characteristics to notice.*
@@ -37,13 +39,11 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
 
 *Disadvantages: Fully connected layers are incredibly computationally expensive. That’s why we use them only to combine the upper layer features.Also fully connected layer don't preserve the spatial information.*
 
-***The following images shows ConvNet Architecture*** 
-![stride and filter][image_0]
-
 ![Fully Connected Layer][image_2]
 
-![ConvNet Architecture][image_4]
+***The following image shows ConvNet Architecture*** 
 
+![ConvNet Architecture][image_4]
 
    
 ***This is a great architecture of classifying task.***

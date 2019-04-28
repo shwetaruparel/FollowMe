@@ -170,13 +170,13 @@ workers = 4
 Training
 
 
-### Would this model and data work well for following another object (dog, cat, car, etc.) instead of a human and if not, what changes would be required.###
+### Would this model and data work well for following another object (dog, cat, car, etc.) instead of a human and if not, what changes would be required.
 
 This model was trained on people, however, it could be used to train on any other objects of interest. For example, it could be trained on images of horses or trucks,car,dog,cat. The model could conceivably be trained on any set of labelled data large enough to create a model that works with more categories it is necessary to collect and label images with enough examples for each class with different poses, distances and lighting conditions. With such dataset on hand it is then possible to train a new model using the same technique described here. 
 
-***Future Enhancements***
+### Future Enhancements
+Since there is a lot of room to improve the grading and training effeciency. A lot of good quality data needs to be generated and More convolutional layers can be added.
 
-
-***CONCLUSION***
+### CONCLUSION
 
 This was an exciting project and explains in depth about how to train a deep learning neural network.Also how important is to collect good data. Good data is just as important as a good network architecture, so collecting the best data you can is a key to success!

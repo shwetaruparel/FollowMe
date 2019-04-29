@@ -124,19 +124,20 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
 
   Bilinear upsampling is similar to 'Max Pooling' and uses the weighted average of the four nearest known pixels from the given pixel,     estimating the new pixel intensity value. Although bilinear upsampling loses some details it is much more computationally efficient     than transposed convolutional layers.
 
-  The decoder block mimics the use of skip connections by having the larger decoder block input layer act as the skip connection. It       calculates the separable convolution layer of the concatenated bilinear upsample of the smaller input layer with the larger input       layer.
-
-  Each decoder layer is able to reconstruct a little bit more spatial resolution from the layer before it. The final decoder layer will   output a layer the same size as the original model input image, which will be used for guiding the quad drone.
-  
   ![Bilinear Sampling ][image_6]
   
-  **The bilinear upsampling method does not contribute as a learnable layer like the transposed convolutions in the architecture and is prone to lose some finer details, but it helps speed up performance.**
+***The bilinear upsampling method does not contribute as a learnable layer like the transposed convolutions in the architecture and is prone to lose some finer details, but it helps speed up performance.**
+
+The decoder block mimics the use of skip connections by having the larger decoder block input layer act as the skip connection. It       calculates the separable convolution layer of the concatenated bilinear upsample of the smaller input layer with the larger input       layer.
 
 ***Skip Connections***
 
   Skip connections allow the network to retain information from prior layers that were lost in subsequent convolution layers. Skip         layers use the output of one layer as the input to another layer. By using information from multiple image sizes, the model retains     more information through the layers and is therefore able to make more precise segmentation decisions.
 
-  ***The FCN model used for the project contains a four encoder block layers,  1x1 convolution layers, and four decoder block layers.
+***Each decoder layer is able to reconstruct a little bit more spatial resolution from the layer before it. The final decoder layer will   output a layer the same size as the original model input image, which will be used for guiding the quad drone.***
+
+
+### The FCN model used for the project contains a four encoder block layers,  1x1 convolution layers, and four decoder block layers.
    
     conv_in = conv2d_batchnorm(input_layer=inputs, filters=16, kernel_size=1, strides=1)
     enc_1 = encoder_block(input_layer=conv_in,  filters=32,  strides=2)
@@ -165,7 +166,7 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
 
 #### Hyperparameters
 
-Hyperparameters were found mostly via manual tuning and inspection. Starting with a learning rate of .0015 to reaching 0.001 that gives the ***final grade score of 43% and final IOU of 57%***. There are 4131 images in the training dataset.Taking into consideration that no memory issues come around I chose batch_size to be 100 and accordingly selected steps_per_epoch to be 50 approximated by dividing number of images by batch_size. I wanted to try with 4 workers to maximize the speed and it worked. I started with validation steps with a value of 10 and then increased to 12 to obtain less loss and better score.
+Hyperparameters were found mostly via manual tuning and inspection. Starting with a learning rate of .01 to reaching 0.001 that gives the ***final grade score of 43% and final IOU of 57%***. There are 4131 images in the training dataset.Taking into consideration that no memory issues come around and no overfitting happens batch_size of 100 is chosen and accordingly selected steps_per_epoch to be 50 approximated by dividing number of images by batch_size.To maximize the speed 4 workers are chosen and it worked.validation_step was set around 4 times smaller than steps_for_epoch parameter.
 
 ![Loss Plot][image_8]
 
@@ -174,8 +175,6 @@ Hyperparameters were found mostly via manual tuning and inspection. Starting wit
 *Learning rate is a hyper-parameter that controls how much we adjusting the weights of our network with respect to the loss gradient.While this might be a good idea (using a low learning rate) in terms of making sure that we do not miss any local minima, it could also mean that we’ll be taking a long time to converge. Learning rate of 0.01 improved the grading score to 40% and above.*
 
 ![Learning Rate ][image_9]
-
-
 
 The optimal hyperparameters:
 

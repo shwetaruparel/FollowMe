@@ -96,6 +96,7 @@ FCNs take advantage of three special techniquess
 *The reduction in the parameters make separable convolutions quite efficient with improved runtime performance and are also, as a result, useful for mobile applications. They also have the added benefit of reducing overfitting to an extent, because of the fewer parameters.*
 
 *The batch normalization layer has a number of advantages. It makes the network train more quickly and effectively and makes it easier to find good hyperparameters. It normalises the inputs of each layer so that they have a mean output activation of zero and standard deviation of one*
+
 ***Few advantages of using Batch Normalisation are:***
 
 **Networks train faster –** Each training iteration will actually be slower because of the extra calculations during the forward pass. However, it should converge much more quickly, so training should be faster overall.
@@ -197,16 +198,22 @@ workers = 4
 This model was trained on people, however, it could be used to train on any other objects of interest. For example, it could be trained on images of horses or trucks,car,dog,cat. The model could conceivably be trained on any set of labelled data large enough to create a model that works with more categories it is necessary to collect and label images with enough examples for each class with different poses, distances and lighting conditions. With such dataset on hand it is then possible to train a new model using the same technique described here. 
 
 ### Future Enhancements
+
 Since there is a lot of room to improve the grade score  and training effeciency. A lot of good quality data needs to be generated.
 It is often useful to get more data from the exisiting 
+
 ***The following options could be used to optimise the techniques used to build the FCN model and train.***
+
 1) Implementing Skip Connections to retain information better.
+
 2) Implementing Regularisation techniques.The following options are available.
-    Dropout ― Dropout is a technique used in neural networks to prevent overfitting the training data by dropping out neurons with            probability p>0. It forces the model to avoid relying too much on particular sets of features.
+
+    Dropout ― Dropout is a technique used in neural networks to prevent overfitting the training data by dropping out neurons with           probability p>0. It forces the model to avoid relying too much on particular sets of features.
 
     Weight regularization ― In order to make sure that the weights are not too large and that the model is not overfitting the training     set, regularization techniques are usually performed on the model weights.
 
     Early stopping ― This regularization technique stops the training process as soon as the validation loss reaches a plateau or starts     to increase. 
+
 3) Using Transposed Convolutions in Decoder.
 
 ***The following options can be used for optimising the hyperparameters***

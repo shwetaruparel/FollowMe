@@ -8,6 +8,8 @@
 [image_6]: ./images/bilin.png
 [image_7]: ./images/herotarget.png
 [image_8]: ./images/lossplot.png
+[image_9]: ./images/learningrate.png
+
 
 # FollowMe
 Drone tracking and following a single hero target 
@@ -165,7 +167,15 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
 
 Hyperparameters were found mostly via manual tuning and inspection. Starting with a learning rate of .0015 to reaching 0.001 that gives the ***final grade score of 43% and final IOU of 57%***. There are 4131 images in the training dataset.Taking into consideration that no memory issues come around I chose batch_size to be 100 and accordingly selected steps_per_epoch to be 50 approximated by dividing number of images by batch_size. I wanted to try with 4 workers to maximize the speed and it worked. I started with validation steps with a value of 10 and then increased to 12 to obtain less loss and better score.
 
+![Loss Plot][image_8]
+
 ***Learning Rate was the most challenging parameter, I tried higher rates like 0.01 to lower rates of.009 to 0.001 and best parameter to be able to give better grade score was 0.001.***
+
+*Learning rate is a hyper-parameter that controls how much we adjusting the weights of our network with respect to the loss gradient.While this might be a good idea (using a low learning rate) in terms of making sure that we do not miss any local minima, it could also mean that we’ll be taking a long time to converge. Learning rate of 0.01 improved the grading score to 40% and above.*
+
+![Learning Rate ][image_9]
+
+
 
 The optimal hyperparameters:
 

@@ -1,6 +1,6 @@
 [//]: # (Image References)
 [image_0]: ./images/cnn.png
-[image_1]: ./images/1X1convolution.png
+[image_1]: ./images/conv_1_1.png
 [image_2]: ./images/ConvNet.png
 [image_3]: ./images/FCN.png
 [image_4]: ./images/architecture-cnn.png

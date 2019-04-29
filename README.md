@@ -217,6 +217,7 @@ It is often useful to get more data from the exisiting
 3) Using Transposed Convolutions in Decoder.
 
 ***The following options can be used for optimising the hyperparameters***
+
 Adaptive learning rates ― Letting the learning rate vary when training a model can reduce the training time and improve the numerical optimal solution. While Adam optimizer is the most commonly used technique, others can also be useful. 
 
 

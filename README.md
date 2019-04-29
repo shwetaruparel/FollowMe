@@ -87,13 +87,14 @@ FCNs take advantage of three special techniquess
 
  The encoder section is comprised of series of convolutional layers to extract features.Here we use Separable Convolution Layer
 
-*Separable convolution layers are a convolution technique for increasing model performance by reducing the number of parameters in each convolution. Separable convolutions, also known as depthwise separable convolutions, comprise of a convolution performed over each channel of an input layer and followed by a 1x1 convolution that takes the output channels from the previous step and then combines them into an output layer. This technique allows for the efficient use of parameters. it is highly computationally efficient whilst also being extremely  accurate.
+*Separable convolution layers are a convolution technique for increasing model performance by reducing the number of parameters in each convolution. Separable convolutions, also known as depthwise separable convolutions, comprise of a convolution performed over each channel of an input layer and followed by a 1x1 convolution that takes the output channels from the previous step and then combines them into an output layer. This technique allows for the efficient use of parameters. it is highly computationally efficient whilst also being extremely  accurate.*
 
 *Suppose we have an input shape of 32x32x3. With the desired number of 9 output channels and filters (kernels) of shape 3x3x3. In the regular convolutions, the 3 input channels get traversed by the 9 kernels.* ***That's a total of 243(9*3*3*3) parameters.***
 
 *In case of the* ***separable convolutions***, *the 3 input channels get traversed with 1 kernel each. That gives us 27 parameters (3*3*3) and 3 feature maps. In the next step, these 3 feature maps get traversed by 9 1x1 convolutions each. That results in a total of 27 (9*3) parameters. That's a total of 54 (27 + 27) parameters! Way less than the 243 parameters we got above. And as the size of the layers or channels increases, the difference will be more noticeable.*
 
 *The reduction in the parameters make separable convolutions quite efficient with improved runtime performance and are also, as a result, useful for mobile applications. They also have the added benefit of reducing overfitting to an extent, because of the fewer parameters.*
+
 *The batch normalization layer has a number of advantages. It makes the network train more quickly and effectively and makes it easier to find good hyperparameters. It normalises the inputs of each layer so that they have a mean output activation of zero and standard deviation of one*
 ***Few advantages of using Batch Normalisation are:***
 
@@ -126,7 +127,7 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
 
   ![Bilinear Sampling ][image_6]
   
-***The bilinear upsampling method does not contribute as a learnable layer like the transposed convolutions in the architecture and is prone to lose some finer details, but it helps speed up performance.**
+***The bilinear upsampling method does not contribute as a learnable layer like the transposed convolutions in the architecture and is prone to lose some finer details, but it helps speed up performance.***
 
 The decoder block mimics the use of skip connections by having the larger decoder block input layer act as the skip connection. It       calculates the separable convolution layer of the concatenated bilinear upsample of the smaller input layer with the larger input       layer.
 
@@ -201,11 +202,11 @@ It is often useful to get more data from the exisiting
 ***The following options could be used to optimise the techniques used to build the FCN model and train.***
 1) Implementing Skip Connections to retain information better.
 2) Implementing Regularisation techniques.The following options are available.
-Dropout ― Dropout is a technique used in neural networks to prevent overfitting the training data by dropping out neurons with probability p>0. It forces the model to avoid relying too much on particular sets of features.
+    Dropout ― Dropout is a technique used in neural networks to prevent overfitting the training data by dropping out neurons with            probability p>0. It forces the model to avoid relying too much on particular sets of features.
 
-Weight regularization ― In order to make sure that the weights are not too large and that the model is not overfitting the training set, regularization techniques are usually performed on the model weights.
+    Weight regularization ― In order to make sure that the weights are not too large and that the model is not overfitting the training     set, regularization techniques are usually performed on the model weights.
 
-Early stopping ― This regularization technique stops the training process as soon as the validation loss reaches a plateau or starts to increase. 
+    Early stopping ― This regularization technique stops the training process as soon as the validation loss reaches a plateau or starts     to increase. 
 3) Using Transposed Convolutions in Decoder.
 
 ***The following options can be used for optimising the hyperparameters***

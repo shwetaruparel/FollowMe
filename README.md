@@ -4,6 +4,9 @@
 [image_2]: ./images/ConvNet.png
 [image_3]: ./images/FCN.png
 [image_4]: ./images/architecture-cnn.png
+[image_5]: ./images/encdec.png
+[image_6]: ./images/bilin.png
+[image_7]: ./images/herotarget.png
 
 # FollowMe
 Drone tracking and following a single hero target 
@@ -20,7 +23,7 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
 
 #### Deep neural networks contain multiple non-linear hidden layers and this makes them very expressive models that can learn very           complicated relationships between their inputs and outputs.
   
-*Convolutional networks are powerful visual models that yield hierarchies of features and useful for image classification, object detection, and recognition tasks.CNNs are implemented as a series of interconnected layers.The layers are made up of repeated blocks of convolutional, ReLU (rectified linear units), and pooling layers. The convolutional layers convolve their input with a set of filters. The filters were automatically learned during network training. The ReLU layer adds nonlinearity to the network, which enables the network to approximate the nonlinear mapping between image pixels and the semantic content of an image. The pooling layers downsample their inputs and help consolidate local image features.
+*Convolutional networks are powerful visual models that yield hierarchies of features and useful for image classification, object detection, and recognition tasks.CNNs are implemented as a series of interconnected layers.The layers are made up of repeated blocks of convolutional, ReLU (rectified linear units), and pooling layers. The convolutional layers convolve their input with a set of filters. The filters were automatically learned during network training. The ReLU layer adds nonlinearity to the network, which enables the network to approximate the nonlinear mapping between image pixels and the semantic content of an image. The pooling layers downsample their inputs and help consolidate local image features.*
 
 *1)This helps CNN to learn classifying local patterns, like shapes and objects in an image.*
 
@@ -28,11 +31,12 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
   
 ![stride and filter][image_0]
 
-*3)Multiple convultions layers are then finally connected to Fully Connected Layers followed by softmax activation function.
+*3)Multiple convultions layers are then finally connected to Fully Connected Layers followed by softmax activation function.*
   
 *4)CNN isn't "programmed" to look for certain characteristics. Rather, it learns on its own which characteristics to notice.*
  
 *5)Fully connected layer — Fully connected layers connect every neuron in one layer to every neuron in another layer. It is in principle the same as the traditional multi-layer perceptron neural network.*
+
 *Finally, after several convolutional and max pooling layers, the high-level reasoning in the neural network is done via fully connected layers. Neurons in a fully connected layer have connections to all activations in the previous layer, as seen in regular neural networks. Their activations can hence be computed with a matrix multiplication followed by a bias offset.*
 
 *Advantages: A fully connected layer learns features from all the combinations of the features of the previous layer, where a convolutional layer relies on local spatial coherence with a small receptive field.*
@@ -54,7 +58,9 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
 
 FCN is a powerful type of Neural Network, capable of carrying out complex computer vision tasks such as identifying objects in  an image. However, unlike a simple classifier, it is capable of showing where in the image the object of interest is located.This is the architecture we have used in the task follow me , where a human target is first identified and then followed as per the location of human target in the scene.
 
- The FCN is built to be able to segment objects within the video stream. This means that each pixel in the image needs to be              labeled. Fully convolutional networks are capable of this via a process called semantic segmentation. The model is built such            that the output image is the same size at the original input image.Semantic segmentation allows FCNs to preserve spatial                information throughout the network.
+![Human Target][image_9]
+
+The FCN is built to be able to segment objects within the video stream. This means that each pixel in the image needs to be              labeled. Fully convolutional networks are capable of this via a process called semantic segmentation. The model is built such            that the output image is the same size at the original input image.Semantic segmentation allows FCNs to preserve spatial                information throughout the network.
        
 ***Semantic Segmentation***
     
@@ -72,20 +78,19 @@ FCNs take advantage of three special techniquess
 
 ***An FCN is usually comprised of two parts Encoder and Decoder.***
 
+![Encoder and Decoder][image_5]
+
 ***Encoder***
 
  The encoder section is comprised of series of convolutional layers to extract features.Here we use Separable Convolution Layer
 
 *Separable convolution layers are a convolution technique for increasing model performance by reducing the number of parameters in each convolution. Separable convolutions, also known as depthwise separable convolutions, comprise of a convolution performed over each channel of an input layer and followed by a 1x1 convolution that takes the output channels from the previous step and then combines them into an output layer. This technique allows for the efficient use of parameters. it is highly computationally efficient whilst also being extremely  accurate.
 
-*Suppose we have an input shape of 32x32x3. With the desired number of 9 output channels and filters (kernels) of shape 3x3x3. In the regular convolutions, the 3 input channels get traversed by the 9 kernels. This would result in a total of 9*3*3*3 features (ignoring biases).* ***That's a total of 243 parameters.***
+*Suppose we have an input shape of 32x32x3. With the desired number of 9 output channels and filters (kernels) of shape 3x3x3. In the regular convolutions, the 3 input channels get traversed by the 9 kernels.* ***That's a total of 243(9*3*3*3) parameters.***
 
 *In case of the* ***separable convolutions***, *the 3 input channels get traversed with 1 kernel each. That gives us 27 parameters (3*3*3) and 3 feature maps. In the next step, these 3 feature maps get traversed by 9 1x1 convolutions each. That results in a total of 27 (9*3) parameters. That's a total of 54 (27 + 27) parameters! Way less than the 243 parameters we got above. And as the size of the layers or channels increases, the difference will be more noticeable.*
 
 *The reduction in the parameters make separable convolutions quite efficient with improved runtime performance and are also, as a result, useful for mobile applications. They also have the added benefit of reducing overfitting to an extent, because of the fewer parameters.*
-
-***The encoder layers allows model to gain a better understanding of the characeristics in the image, building a depth of understanding    with respect to specific features and thus the 'semantics' of the segmentation. The first layer might discern colours and brightness, the next might discern aspects of the shape of the object, so for a human body, arms and legs and heads might begin to become          successfully segmented. Each successive layers builds greater depth of semantics necessary for the segmentation. However, the deeper     the network, the more computationally intensive it becomes to train.***
-
 *The batch normalization layer has a number of advantages. It makes the network train more quickly and effectively and makes it easier to find good hyperparameters. It normalises the inputs of each layer so that they have a mean output activation of zero and standard deviation of one*
 ***Few advantages of using Batch Normalisation are:***
 
@@ -103,6 +108,9 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
 
 *The 1x1 convolution layer is a regular convolution, with a kernel and stride of 1. Using a 1x1 convolution layer allows the network to  be able to retain spatial information from the encoder. The 1x1 convolution layers allows the data to be both flattened for        classification while retaining spatial information. 1x1 convolution helped in reducing the dimensionality of the layer. A fully-connected layer of the same size would result in the same number of features. However, replacement of fully-connected layers with convolutional layers presents an added advantage that during inference (testing your model), you can feed images of any size into your trained network.*
 
+***The encoder layers allows model to gain a better understanding of the characeristics in the image, building a depth of understanding    with respect to specific features and thus the 'semantics' of the segmentation. The first layer might discern colours and brightness, the next might discern aspects of the shape of the object, so for a human body, arms and legs and heads might begin to become          successfully segmented. Each successive layers builds greater depth of semantics necessary for the segmentation. However, the deeper     the network, the more computationally intensive it becomes to train.***
+
+
 ***Decoder***
 
   The decoder section of the model can either be composed of transposed convolution layers or bilinear upsampling layers.
@@ -114,6 +122,8 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
   The decoder block mimics the use of skip connections by having the larger decoder block input layer act as the skip connection. It       calculates the separable convolution layer of the concatenated bilinear upsample of the smaller input layer with the larger input       layer.
 
   Each decoder layer is able to reconstruct a little bit more spatial resolution from the layer before it. The final decoder layer will   output a layer the same size as the original model input image, which will be used for guiding the quad drone.
+  
+  ![Bilinear Sampling ][image_6]
   
   **The bilinear upsampling method does not contribute as a learnable layer like the transposed convolutions in the architecture and is prone to lose some finer details, but it helps speed up performance.**
 
@@ -150,9 +160,9 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
 
 #### Hyperparameters
 
-Hyperparameters were found mostly via manual tuning and inspection. Starting with a learning rate of .0015 to reaching 0.001 that gives the ***final grade score of 43% and final IOU of 57%***. There are 4131 images in the training dataset.Taking into consideration that no memory issues come arounf I chose batch_size to be 100 and accordingly selected steps_per_epoch to be 50 approximated by dividing number of images by batch_size. I wanted to try with 4 workers to maximize the speed and it worked. I started with validation steps with a value of 10 and then increased to 12 to obtain less loss and better score.
+Hyperparameters were found mostly via manual tuning and inspection. Starting with a learning rate of .0015 to reaching 0.001 that gives the ***final grade score of 43% and final IOU of 57%***. There are 4131 images in the training dataset.Taking into consideration that no memory issues come around I chose batch_size to be 100 and accordingly selected steps_per_epoch to be 50 approximated by dividing number of images by batch_size. I wanted to try with 4 workers to maximize the speed and it worked. I started with validation steps with a value of 10 and then increased to 12 to obtain less loss and better score.
 
-***Learning Rate was the most challenging parameter, I tried higher rates like 0.01 to 0.009 to 0.001 and best parameter to be able to give better grade score was 0.001.***
+***Learning Rate was the most challenging parameter, I tried higher rates like 0.01 to lower rates of.009 to 0.001 and best parameter to be able to give better grade score was 0.001.***
 
 The optimal hyperparameters:
 
@@ -174,7 +184,7 @@ workers = 4
 This model was trained on people, however, it could be used to train on any other objects of interest. For example, it could be trained on images of horses or trucks,car,dog,cat. The model could conceivably be trained on any set of labelled data large enough to create a model that works with more categories it is necessary to collect and label images with enough examples for each class with different poses, distances and lighting conditions. With such dataset on hand it is then possible to train a new model using the same technique described here. 
 
 ### Future Enhancements
-Since there is a lot of room to improve the grading and training effeciency. A lot of good quality data needs to be generated and More convolutional layers can be added.
+Since there is a lot of room to improve the grade score  and training effeciency. A lot of good quality data needs to be generated and More convolutional layers can be added.
 
 ### CONCLUSION
 

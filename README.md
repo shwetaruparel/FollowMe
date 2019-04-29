@@ -108,7 +108,7 @@ In TensorFlow, the output shape of a convolutional layer is a 4D tensor. However
 
 *The 1x1 convolution layer is a regular convolution, with a kernel and stride of 1. Using a 1x1 convolution layer allows the network to  be able to retain spatial information from the encoder. The 1x1 convolution layers allows the data to be both flattened for        classification while retaining spatial information. 1x1 convolution helped in reducing the dimensionality of the layer. A fully-connected layer of the same size would result in the same number of features. However, replacement of fully-connected layers with convolutional layers presents an added advantage that during inference (testing your model), you can feed images of any size into your trained network.*
 
-![Encoder and Decoder][image_1]
+![1X1 Convolution][image_1]
 
 ***The encoder layers allows model to gain a better understanding of the characeristics in the image, building a depth of understanding    with respect to specific features and thus the 'semantics' of the segmentation. The first layer might discern colours and brightness, the next might discern aspects of the shape of the object, so for a human body, arms and legs and heads might begin to become          successfully segmented. Each successive layers builds greater depth of semantics necessary for the segmentation. However, the deeper     the network, the more computationally intensive it becomes to train.***
 

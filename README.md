@@ -7,6 +7,7 @@
 [image_5]: ./images/encdec.png
 [image_6]: ./images/bilin.png
 [image_7]: ./images/herotarget.png
+[image_8]: ./images/lossplot.png
 
 # FollowMe
 Drone tracking and following a single hero target 

@@ -58,7 +58,7 @@ The model is built within Tensorflow and Keras, and was trained using UDACITY GP
 
 FCN is a powerful type of Neural Network, capable of carrying out complex computer vision tasks such as identifying objects in  an image. However, unlike a simple classifier, it is capable of showing where in the image the object of interest is located.This is the architecture we have used in the task follow me , where a human target is first identified and then followed as per the location of human target in the scene.
 
-![Human Target][image_9]
+![Human Target][image_7]
 
 The FCN is built to be able to segment objects within the video stream. This means that each pixel in the image needs to be              labeled. Fully convolutional networks are capable of this via a process called semantic segmentation. The model is built such            that the output image is the same size at the original input image.Semantic segmentation allows FCNs to preserve spatial                information throughout the network.
        

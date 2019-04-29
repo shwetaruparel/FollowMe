@@ -196,7 +196,21 @@ workers = 4
 This model was trained on people, however, it could be used to train on any other objects of interest. For example, it could be trained on images of horses or trucks,car,dog,cat. The model could conceivably be trained on any set of labelled data large enough to create a model that works with more categories it is necessary to collect and label images with enough examples for each class with different poses, distances and lighting conditions. With such dataset on hand it is then possible to train a new model using the same technique described here. 
 
 ### Future Enhancements
-Since there is a lot of room to improve the grade score  and training effeciency. A lot of good quality data needs to be generated and More convolutional layers can be added.
+Since there is a lot of room to improve the grade score  and training effeciency. A lot of good quality data needs to be generated.
+It is often useful to get more data from the exisiting 
+***The following options could be used to optimise the techniques used to build the FCN model and train.***
+1) Implementing Skip Connections to retain information better.
+2) Implementing Regularisation techniques.The following options are available.
+Dropout ― Dropout is a technique used in neural networks to prevent overfitting the training data by dropping out neurons with probability p>0. It forces the model to avoid relying too much on particular sets of features.
+
+Weight regularization ― In order to make sure that the weights are not too large and that the model is not overfitting the training set, regularization techniques are usually performed on the model weights.
+
+Early stopping ― This regularization technique stops the training process as soon as the validation loss reaches a plateau or starts to increase. 
+3) Using Transposed Convolutions in Decoder.
+
+***The following options can be used for optimising the hyperparameters***
+Adaptive learning rates ― Letting the learning rate vary when training a model can reduce the training time and improve the numerical optimal solution. While Adam optimizer is the most commonly used technique, others can also be useful. 
+
 
 ### CONCLUSION
 
